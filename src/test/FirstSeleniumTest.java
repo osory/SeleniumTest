@@ -5,15 +5,16 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
 import java.util.concurrent.TimeUnit;
 
 public class FirstSeleniumTest {
 
     public static WebDriver driver;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\35196\\IdeaProjects\\selenium test\\lib\\seleniumjars\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver","C:\\Users\\35196\\IdeaProjects\\selenium test\\SeleniumTest\\lib\\seleniumjars\\chromedriver.exe");
 
         driver = new ChromeDriver();
 
@@ -21,42 +22,83 @@ public class FirstSeleniumTest {
 
         driver.manage().window().maximize();
 
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
-        WebElement root1 = driver.findElement(By.cssSelector("my-app"));
-        WebElement shadow_root1 = expand_shadow_element(root1);
+        writeEmail();
 
-        WebElement root2 = shadow_root1.findElement(By.cssSelector("mwc-drawer"));
-        WebElement shadow_root2= expand_shadow_element(root2);
+        writePassword();
 
-        WebElement root3 = shadow_root2.findElement(By.name("appContent"));
-        WebElement shadow_root3 = expand_shadow_element(root3);
+        pressButton();
+    }
 
-        WebElement root4 = shadow_root3.findElement(By.cssSelector("div#main-content"));
-        WebElement shadow_root4 = expand_shadow_element(root4);
+    static void writeEmail() throws InterruptedException {
+        Thread.sleep(1000);
 
-        WebElement root5 = shadow_root4.findElement(By.cssSelector("div#container"));
-        WebElement shadow_root5 = expand_shadow_element(root5);
+        WebElement shadowDomHostElement0 = driver.findElement(By.cssSelector("my-app[title='FoodPlan']"));
+        WebElement last0 = (WebElement) ((JavascriptExecutor) driver).executeScript("return arguments[0].shadowRoot", shadowDomHostElement0);
 
-        WebElement root6 = shadow_root5.findElement(By.cssSelector("login-container"));
-        WebElement shadow_root6 = expand_shadow_element(root6);
+        Thread.sleep(1000);
 
-        WebElement root7 = shadow_root6.findElement(By.cssSelector("mwc-textfield"));
-        WebElement shadow_root7 = expand_shadow_element(root7);
+        WebElement shadowDomHostElement1 = last0.findElement(By.cssSelector("page-login"));
+        WebElement last1 = (WebElement) ((JavascriptExecutor) driver).executeScript("return arguments[0].shadowRoot", shadowDomHostElement1);
 
-        WebElement root8 = shadow_root7.findElement(By.cssSelector("mdc-text-field__ripple"));
-        WebElement shadow_root8 = expand_shadow_element(root8);
+        Thread.sleep(1000);
 
-        WebElement login = shadow_root8.findElement(By.cssSelector("mdc-text-field__input"));
+        WebElement shadowDomHostElement2 = last1.findElement(By.cssSelector("mwc-textfield[type='email']"));
+        WebElement last2 = (WebElement) ((JavascriptExecutor) driver).executeScript("return arguments[0].shadowRoot", shadowDomHostElement2);
 
-        String js = "arguments[0].setAttribute('value','fabio.oliveira@ubi.pt')";
-        ((JavascriptExecutor) driver).executeScript(js, login);
+        Thread.sleep(1000);
+
+        last2.findElement(By.cssSelector(".mdc-text-field__input"));
+
+        last2.findElement(By.cssSelector("input")).sendKeys("random@email.com");
 
     }
 
-    public static WebElement expand_shadow_element(WebElement element)
-    {
-        WebElement shadow_root = (WebElement)((JavascriptExecutor)driver).executeScript("return arguments[0].shadowRoot", element);
-        return shadow_root;
+    static void writePassword() throws InterruptedException {
+
+        Thread.sleep(1000);
+
+        WebElement shadowDomHostElement0 = driver.findElement(By.cssSelector("my-app[title='FoodPlan']"));
+        WebElement last0 = (WebElement) ((JavascriptExecutor) driver).executeScript("return arguments[0].shadowRoot", shadowDomHostElement0);
+
+        Thread.sleep(1000);
+
+        WebElement shadowDomHostElement1 = last0.findElement(By.cssSelector("page-login"));
+        WebElement last1 = (WebElement) ((JavascriptExecutor) driver).executeScript("return arguments[0].shadowRoot", shadowDomHostElement1);
+
+        Thread.sleep(1000);
+
+        WebElement shadowDomHostElement2 = last1.findElement(By.cssSelector("mwc-textfield[type='password']"));
+        WebElement last2 = (WebElement) ((JavascriptExecutor) driver).executeScript("return arguments[0].shadowRoot", shadowDomHostElement2);
+
+        Thread.sleep(1000);
+
+        last2.findElement(By.cssSelector(".mdc-text-field__input"));
+
+        last2.findElement(By.cssSelector("input")).sendKeys("password");
     }
+
+    static void pressButton() throws InterruptedException {
+
+        Thread.sleep(1000);
+
+        WebElement shadowDomHostElement0 = driver.findElement(By.cssSelector("my-app[title='FoodPlan']"));
+        WebElement last0 = (WebElement) ((JavascriptExecutor) driver).executeScript("return arguments[0].shadowRoot", shadowDomHostElement0);
+
+        Thread.sleep(1000);
+
+        WebElement shadowDomHostElement1 = last0.findElement(By.cssSelector("page-login"));
+        WebElement last1 = (WebElement) ((JavascriptExecutor) driver).executeScript("return arguments[0].shadowRoot", shadowDomHostElement1);
+
+        Thread.sleep(1000);
+
+        WebElement shadowDomHostElement2 = last1.findElement(By.cssSelector("mwc-button[label='Login']"));
+        WebElement last2 = (WebElement) ((JavascriptExecutor) driver).executeScript("return arguments[0].shadowRoot", shadowDomHostElement2);
+
+        Thread.sleep(1000);
+
+        last2.findElement(By.id("button")).click();
+    }
+
 }
