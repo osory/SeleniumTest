@@ -323,7 +323,7 @@ public class FirstSeleniumTest {
         Thread.sleep(1000);
 
         WebElement shadowDomHostElement2 = last1.findElement(By.cssSelector("#btn-main"));
-        
+
         Thread.sleep(1000);
 
         Actions actions = new Actions(driver);
